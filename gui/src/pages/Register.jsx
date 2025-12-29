@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import {Button} from "@mui/material";
 import LoadingIndicator from "../components/LoadingIndicator";
-import "../styles/Login.css";
 
 function Register() {
 

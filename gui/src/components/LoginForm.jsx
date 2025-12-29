@@ -4,19 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import {Button} from "@mui/material";
 import LoadingIndicator from "./LoadingIndicator";
-import "../styles/Login.css";
+import "../style/loginForm.css"
 
 function LoginForm({route,method}){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [Loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const name=method==="login"?"Login":"Register";
+    const titulo=method==="login"?"Iniciar Sesión":"Registrarse";
 
     const handleSubmit= async(e)=>{
         setLoading(true);
         e.preventDefault();
-
         try{
             const response= await api.post(route,{username,password});
             if(method =="login"){
@@ -26,7 +25,6 @@ function LoginForm({route,method}){
             }else{
                 navigate("/login");
             }
-
         }
         catch(error){
             alert(error);
@@ -38,13 +36,22 @@ function LoginForm({route,method}){
     }
 
 
-    return <div className="login-container">
-        <form onSubmit={handleSubmit} className="form-container">
-        <h1>{name}</h1>
-        <input className="form-input" type="text" value={username} onChange={(e)=>setUsername(e.target.value)} placeholder="Nombre de Usuario"/>
-        <input className="form-input" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Contraseña"/>
-        {Loading && <LoadingIndicator/>}
-        <Button className="form-button" type="submit">{name}</Button>
+    return <div className="loginContainer">
+        <form onSubmit={handleSubmit} >
+            <div className="loginFormContainer">
+                <h1>{titulo}</h1>
+                <label htmlFor="username">Usuario:</label>
+                <br />
+                <input className="form-input" id="username" type="text" value={username} onChange={(e)=>setUsername(e.target.value)} placeholder="Nombre de Usuario"/>
+                <br />
+                <label htmlFor="password">Contraseña:</label>
+                <br />
+                <input className="form-input" id="password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Contraseña"/>
+                
+                {Loading && <LoadingIndicator/>}
+            <br />
+            <button type="submit">{titulo}</button></div>
+        
         </form>
         </div>
 }

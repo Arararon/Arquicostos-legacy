@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/Note.css";
 import { useNavigate, Link } from "react-router-dom";
 import Material from "./Material";
 import ManoObra from "./ManoObra";

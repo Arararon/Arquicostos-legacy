@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import api from "../api";
-import "../styles/Home.css"
 import { Grid, Card, CardContent, CardMedia, Typography, CardActions, Button } from "@mui/material";
-import "../styles/Login.css";
+
 
 
 function Home() {

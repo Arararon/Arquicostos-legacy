@@ -10,7 +10,6 @@ import {Typography,
 
 } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import "../styles/catalog.css";
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';

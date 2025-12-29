@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api";
 import Concepto from "../components/Concepto"
-import "../styles/Home.css"
+
 
 function Obra() {
     const [conceptos, setConceptos] = useState([]);

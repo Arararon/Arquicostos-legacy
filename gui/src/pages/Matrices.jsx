@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api";
-import "../styles/Home.css"
 import Material from "../components/Material";
 import ManoObra from "../components/ManoObra";
 import EquipoHerramienta from "../components/EquipoHerramienta";
