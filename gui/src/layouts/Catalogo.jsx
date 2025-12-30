@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import { useEffect,useState } from "react";
 import api from "../api";
 import PartidasTree from "../components/PartidasTree";
+import ConceptosTable from "../components/IsumoTable";
 import "../style/catalogo.css"
 
 
@@ -28,10 +29,9 @@ function Catalogo(props){
             });
     };
 
-
     const crearSubPartida = (id) => {
         api
-            .post(`/api/obras/${obraId}/partidas/`, { nombre: "nueva sub-Partida", obra: obraId })
+.post(`/api/obras/${obraId}/partidas/`, { nombre: "nueva sub-Partida", obra: obraId })
             .then((res) => {
                 if (res.status === 201) {
                     api
@@ -48,7 +48,6 @@ function Catalogo(props){
             })
     }
     
-
     const crearPartida = () => {
     
         api
@@ -73,7 +72,10 @@ function Catalogo(props){
             </div>
             <div className="catalogoBody">
                 <h2>Catalogo</h2>
-                {partidaActual}</div>
+
+                {partidaActual<0?"":
+                <ConceptosTable obraID={obraId} partidaID={partidaActual} />}
+                </div>
         </section>
 
     )

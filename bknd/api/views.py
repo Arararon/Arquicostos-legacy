@@ -162,6 +162,7 @@ class ConceptoUpdate(generics.UpdateAPIView):
     def get_queryset(self):
         user = self.request.user
         return Concepto.objects.filter(obra__author=user)
+    
     def perform_update(self, serializer):
         if serializer.is_valid():
             obra = Obra.objects.get(id=self.request.data["obra"])

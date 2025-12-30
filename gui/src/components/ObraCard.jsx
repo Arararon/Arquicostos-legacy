@@ -11,10 +11,10 @@ function ObraCard({obra,handleVerMas,handleDuplicate,handleDelete,handleGrupos})
                 <div>{obra.calle} {obra.numero}, {obra.municipio}, {obra.estado} C.P. {obra.codigoPostal}</div>
             </div>
             <div className="ObraButtonBar">
-                <button onClick={()=>handleVerMas()}>Ver más</button>
-                <button onClick={()=>handleDuplicate()}>duplicar</button>
-                <button onClick={() => handleDelete()}>eliminar</button>
-                <button onClick={() => handleGrupos()}>grupos de trabajo</button>
+                <button onClick={()=>handleVerMas()} title="Ver Más"><i class="material-icons">open_in_new</i></button>
+                <button onClick={()=>handleDuplicate()} title="Duplicar"><i class="material-icons">content_copy</i></button>
+                <button onClick={() => handleDelete()} title="Eliminar"><i class="material-icons">delete</i></button>
+                <button onClick={() => handleGrupos()} title="Manejar Grupos"><i class="material-icons">group</i></button>
             </div>
 
         </div>

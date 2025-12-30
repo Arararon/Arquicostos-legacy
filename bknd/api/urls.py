@@ -14,7 +14,7 @@ urlpatterns = [
 
 
     path("obras/<int:pk>/conceptos/<int:part>/", views.ConceptoListCreate.as_view(), name="concepto-list"),
-    path("obras/<int:pk>/conceptos/<int:concepto_pk>/update/", views.ConceptoUpdate.as_view(), name="concepto-update"),
+    path("obras/<int:pk>/conceptos/update/", views.ConceptoUpdate.as_view(), name="concepto-update"),
     path("obras/<int:pk>/conceptos/delete/", views.ConceptoDelete.as_view(), name="concepto-delete"),
     path("obras/<int:pk>/conceptos/<int:concepto_pk>/", views.ConceptoDetailView.as_view(), name="concepto-detail"),
     
@@ -27,16 +27,16 @@ urlpatterns = [
     path("obras/<int:pk>/listaPartidas/", views.PartidasPadreListView.as_view(), name="lista-partidas-view"),
 
     path("obras/<int:pk>/materiales/", views.MaterialListCreate.as_view(), name="material-list"),
-    path("obras/<int:pk>/materiales/<int:material_pk>/update/", views.MaterialUpdate.as_view(), name="material-update"),
-    path("obras/<int:pk>/materiales/<int:material_pk>/delete/", views.MaterialDelete.as_view(), name="material-delete"),
+    path("obras/<int:pk>/materiales/update/", views.MaterialUpdate.as_view(), name="material-update"),
+    path("obras/<int:pk>/materiales/delete/", views.MaterialDelete.as_view(), name="material-delete"),
 
     path("obras/<int:pk>/mano_obra/", views.ManoObraListCreate.as_view(), name="mano-obra-list"),
-    path("obras/<int:pk>/mano_obra/<int:mano_obra_pk>/update/", views.ManoObraUpdate.as_view(), name="mano-obra-update"),
-    path("obras/<int:pk>/mano_obra/<int:mano_obra_pk>/delete/", views.ManoObraDelete.as_view(), name="mano-obra-delete"),
+    path("obras/<int:pk>/mano_obra/update/", views.ManoObraUpdate.as_view(), name="mano-obra-update"),
+    path("obras/<int:pk>/mano_obra/delete/", views.ManoObraDelete.as_view(), name="mano-obra-delete"),
 
     path("obras/<int:pk>/equipo_herramienta/", views.EquipoHerramientaListCreate.as_view(), name="equipo-herramienta-list"),
-    path("obras/<int:pk>/equipo_herramienta/<int:equipo_herramienta_pk>/update/", views.EquipoHerramientaUpdate.as_view(), name="equipo-herramienta-update"),
-    path("obras/<int:pk>/equipo_herramienta/<int:equipo_herramienta_pk>/delete/", views.EquipoHerramientaDelete.as_view(), name="equipo-herramienta-delete"),
+    path("obras/<int:pk>/equipo_herramienta/update/", views.EquipoHerramientaUpdate.as_view(), name="equipo-herramienta-update"),
+    path("obras/<int:pk>/equipo_herramienta/delete/", views.EquipoHerramientaDelete.as_view(), name="equipo-herramienta-delete"),
 
     path("obras/<int:pk>/materiales_concepto/", views.MaterialConceptoListCreate.as_view(), name="material-concepto-list"),
     path("obras/<int:pk>/materiales_concepto/<int:material_concepto_pk>/delete/", views.MaterialConceptoDelete.as_view(), name="material-concepto-delete"),
