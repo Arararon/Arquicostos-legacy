@@ -13,6 +13,7 @@ import Matrices from "./pages/Matrices"
 
 import Grupos from "./pages/Grupos"
 import "./style/global.css"
+import Listados from "./layouts/Listados"
 
 
 function Logout() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/obra/:obraId" element={<ProtectedRoute><Obra /></ProtectedRoute>} />
         <Route path="/obra/:obraId/concepto/:conceptoId" element={<ProtectedRoute><Matrices /></ProtectedRoute>} />
         <Route path="/catalogo/:obraId" element={<ProtectedRoute><Catalogo /></ProtectedRoute>} />
+        <Route path="/listados/:obraId" element={<ProtectedRoute><Listados /></ProtectedRoute>}></Route>
         <Route path="*" element={<NotFound />}></Route>
 
         

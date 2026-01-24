@@ -125,6 +125,7 @@ const getConceptos= async ()=>{
   }
 const patchConcepto=(id,field,value)=>{
     let newValue=field==="cantidad"?parseInt(value):value
+
     api
       .patch(`/api/obras/${id}/conceptos/update/`, {
         [field]: newValue,
@@ -685,8 +686,8 @@ function MaterialRow({row,onChange,deleteInsumo,duplicateInsumo}){
             <td><textarea value={row.material_detalle.descripcion} onChange={(e)=>handleChange(e,row.id,"descripcion")}/></td>
             <td ><input value={row.cantidad} type="number" min="0" onChange={(e)=>handleChange(e,row.id,"cantidad")}/></td>
             <td ><input value={row.material_detalle.unidad} onChange={(e)=>handleChange(e,row.id,"unidad")}/></td>
-            <td ><div className="costo-wrap">$<input value={(row.material_detalle.costoUnitario)} type="number" step="0.01" min="0" onChange={(e)=>handleChange(e,row.id,"costoUnitario")}/></div></td>
-            <td >{formatter.format((row.cantidad * row.material_detalle.costoUnitario).toFixed(2))}</td>
+            <td ><div className="costo-wrap"  onClick={(e)=>{console.log(row)}}>$<input value={(row.material_detalle.costoUnitario)} type="number" step="0.01" min="0" onChange={(e)=>handleChange(e,row.id,"costoUnitario")}/></div></td>
+            <td>{formatter.format((row.cantidad * row.material_detalle.costoUnitario).toFixed(2))}</td>
         </Fragment>
     )
 

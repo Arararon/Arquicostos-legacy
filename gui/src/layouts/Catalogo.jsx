@@ -69,6 +69,10 @@ function Catalogo(props){
                     selectPartida={(e)=>{setPartidaActual(e)}}
                     crearPartida={(e)=>{crearPartida()}}
                     crearSubPartida={(e)=>{crearSubPartida(e)}}/>}
+
+                <h2>Opreaciones</h2>
+
+                <a href={`/Listados/${obraId}`}>Listados</a>
             </div>
             <div className="catalogoBody">
                 <h2>Catalogo</h2>
