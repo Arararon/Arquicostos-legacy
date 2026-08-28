@@ -140,9 +140,9 @@ const patchConcepto=(id,field,value)=>{
 
   }
 /*---------------Manejar Insumos--------------------*/  
-  const updateMaterial = (conceptoID, insumoID, field, value) => {
+  const updateMaterial = (conceptoID, insumoID, field, value,ID) => {
 
-    fieldUpdater("Material",insumoID,field,value)
+    fieldUpdater("Material",ID,field,value)
     let updatedConceptos = [...conceptos];
 
     updatedConceptos.forEach((concepto)=>{
@@ -175,8 +175,8 @@ const patchConcepto=(id,field,value)=>{
 
   }
 
-  const updateManoObra = (conceptoID, insumoID, field, value) => {
-    fieldUpdater("ManoObra",insumoID,field,value)
+  const updateManoObra = (conceptoID, insumoID, field, value,ID) => {
+    fieldUpdater("ManoObra",ID,field,value)
     let updatedConceptos = [...conceptos];
     updatedConceptos.forEach((concepto) => {
       if (concepto.id === conceptoID) {
@@ -211,8 +211,8 @@ const patchConcepto=(id,field,value)=>{
 
   }
   
-  const updateEquipoHerramienta = (conceptoID, insumoID, field, value) => {
-    fieldUpdater("EquipoHerramienta",insumoID,field,value)
+  const updateEquipoHerramienta = (conceptoID, insumoID, field, value,ID) => {
+    fieldUpdater("EquipoHerramienta",ID,field,value)
     let updatedConceptos = [...conceptos];
     updatedConceptos.forEach((concepto) => {
       if (concepto.id === conceptoID) {
@@ -247,16 +247,16 @@ const patchConcepto=(id,field,value)=>{
 
   }
 
-  const updateInsumo = (conceptoID, insumoID, field, value, type) => {
+  const updateInsumo = (conceptoID, insumoID, field, value, type,ID) => {
     switch (type) {
       case "materiales":
-        updateMaterial(conceptoID,insumoID, field, value);
+        updateMaterial(conceptoID,insumoID, field, value,ID);
         break;
       case "mano_obra":
-        updateManoObra(conceptoID,insumoID, field, value);
+        updateManoObra(conceptoID,insumoID, field, value,ID);
         break;
       case "equipo_herramienta":
-        updateEquipoHerramienta(conceptoID,insumoID, field, value);
+        updateEquipoHerramienta(conceptoID,insumoID, field, value,ID);
         break;
       default:
         break;
@@ -531,8 +531,8 @@ return(
             {conceptos.map((concepto)=>(
                 <ConceptoRow key={concepto.id} 
                 concepto={concepto} 
-                onChange={(event,id,type,field)=>{updateInsumo(concepto.id,id,field,event.target.value,type)}}
-                handleChange={(e,id,field)=>{updateConcepto(id,field,e.target.value)}}
+                onChange={(event,id,type,field,insumoID)=>{updateInsumo(concepto.id,id,field,event.target.value,type,insumoID)}}
+                handleChange={(e,id,field,)=>{updateConcepto(id,field,e.target.value)}}
                 deleteConcepto={(e)=>{deleteConcepto(e)}}
                 duplicateConcepto={(e)=>{duplicateConcepto(e)}}
                 agregarInsumo={(tipo,conceptoID)=>{addInsumo(tipo,conceptoID)}}
@@ -556,9 +556,9 @@ function ConceptoRow({concepto,onChange,
     handleChange,deleteConcepto,duplicateConcepto,
     agregarInsumo,deleteInsumo,duplicateInsumo}){
     const insumos=[
-        {titulo:"Materiales",clave:"materiales"}, 
-        {titulo:"Mano de Obra",clave:"mano_obra"},
-        {titulo:"Equipo y Herramienta",clave:"equipo_herramienta"}]
+        {titulo:"Materiales",clave:"materiales", boton:"material"}, 
+        {titulo:"Mano de Obra",clave:"mano_obra",boton:"mano de obra"},
+        {titulo:"Equipo y Herramienta",clave:"equipo_herramienta",boton:"equipo y herramienta"}]
     const getCostoUnitarioConcepto =()=>{
         let totalMateriales = concepto.materiales.reduce((sum, item) => sum + (item.cantidad * item.material_detalle.costoUnitario), 0);
         let totalManoObra = concepto.mano_obra.reduce((sum, item) => sum + (item.cantidad * item.mano_obra_detalle.salario), 0);
@@ -601,9 +601,9 @@ function ConceptoRow({concepto,onChange,
                 <tr key={`${insumo.clave}-${concepto.id}`}><td colSpan={6}>
                         <details>
                             <summary>{insumo.titulo}</summary>
-                            <button onClick={()=>{agregarInsumo(insumo.clave,concepto.id)}}><i className="material-icons">add_circle</i> Agregar </button>
+                            <button onClick={()=>{agregarInsumo(insumo.clave,concepto.id)}}><i className="material-icons">add_circle</i> Nuevo {insumo.boton} </button>
                             <InsumoTable tipo={insumo.clave} insumos={getInsumos(insumo.titulo)} 
-                            onChange={(event,id,type,field)=>{onChange(event,id,type,field)}}
+                            onChange={(event,id,type,field,insumoID)=>{onChange(event,id,type,field,insumoID)}}
                             deleteInsumo={(e,insumoID)=>{deleteInsumo(e,insumoID)}}
                             duplicateInsumo={(e,insumo)=>{duplicateInsumo(e,insumo,concepto.id)}}/>
                         </details>
@@ -623,23 +623,23 @@ function InsumoTable({insumos,tipo,onChange,deleteInsumo,duplicateInsumo}){
         equipo_herramienta: ["Operación","Clave", "Descripción", "Cantidad", "Unidad","Costo Unitario", "Total"]
     };
 
-    const handleChange = (event,id,type,field) => {
-    onChange(event,id,type,field);
+    const handleChange = (event,id,type,field,insumoID) => {
+    onChange(event,id,type,field,insumoID);
   };
 
 
      const selectInsumoRow = (tipo, row) => {
     switch (tipo) { 
       case "materiales":
-        return <MaterialRow row={row} onChange={(e, id, type, field) => { handleChange(e, id, type, field) }} 
+        return <MaterialRow row={row} onChange={(e, id, type, field,insumoID) => { handleChange(e, id, type, field, insumoID) }} 
         deleteInsumo={(e,insumoID)=>{deleteInsumo(e,insumoID)}}
         duplicateInsumo={(e,insumo)=>{duplicateInsumo(e,insumo)}}/>;
       case "mano_obra":
-        return <ManoObraRow row={row} onChange={(e, id, type, field) => { handleChange(e, id, type, field) }} 
+        return <ManoObraRow row={row} onChange={(e, id, type, field,insumoID) => { handleChange(e, id, type, field, insumoID) }} 
         deleteInsumo={(e,insumoID)=>{deleteInsumo(e,insumoID)}}
         duplicateInsumo={(e,insumo)=>{duplicateInsumo(e,insumo)}}/>;
       case "equipo_herramienta":  
-        return <EquipoHerramientaRow row={row} onChange={(e, id, type, field) => { handleChange(e, id, type, field) }} 
+        return <EquipoHerramientaRow row={row} onChange={(e, id, type, field,insumoID) => { handleChange(e, id, type,field, insumoID) }} 
         deleteInsumo={(e,insumoID)=>{deleteInsumo(e,insumoID)}}
         duplicateInsumo={(e,insumo)=>{duplicateInsumo(e,insumo)}}/>;
       default:
@@ -671,8 +671,8 @@ function InsumoTable({insumos,tipo,onChange,deleteInsumo,duplicateInsumo}){
 
 function MaterialRow({row,onChange,deleteInsumo,duplicateInsumo}){
 
-    const handleChange = (event,id,field) => {
-        onChange(event,id,"materiales",field);
+    const handleChange = (event,id,field,InsumoID) => {
+        onChange(event,id,"materiales",field,InsumoID);
     };
     
 
@@ -682,11 +682,11 @@ function MaterialRow({row,onChange,deleteInsumo,duplicateInsumo}){
                 <button onClick={(e)=>{deleteInsumo("material",row.material)}}><i className="material-icons">delete</i></button>
                 <button onClick={(e)=>{duplicateInsumo("material",row)}}><i className="material-icons">content_copy</i></button>
             </td>
-            <td><input value={row.material_detalle.clave} onChange={(e)=>handleChange(e,row.id,"clave")}/></td>
-            <td><textarea value={row.material_detalle.descripcion} onChange={(e)=>handleChange(e,row.id,"descripcion")}/></td>
-            <td ><input value={row.cantidad} type="number" min="0" onChange={(e)=>handleChange(e,row.id,"cantidad")}/></td>
-            <td ><input value={row.material_detalle.unidad} onChange={(e)=>handleChange(e,row.id,"unidad")}/></td>
-            <td ><div className="costo-wrap"  onClick={(e)=>{console.log(row)}}>$<input value={(row.material_detalle.costoUnitario)} type="number" step="0.01" min="0" onChange={(e)=>handleChange(e,row.id,"costoUnitario")}/></div></td>
+            <td><input value={row.material_detalle.clave} onChange={(e)=>handleChange(e,row.id,"clave",row.material)}/></td>
+            <td><textarea value={row.material_detalle.descripcion} onChange={(e)=>handleChange(e,row.id,"descripcion",row.material)}/></td>
+            <td ><input value={row.cantidad} type="number" min="0" onChange={(e)=>handleChange(e,row.id,"cantidad",row.material)}/></td>
+            <td ><input value={row.material_detalle.unidad} onChange={(e)=>handleChange(e,row.id,"unidad",row.material)}/></td>
+            <td ><div className="costo-wrap"  onClick={(e)=>{console.log(row)}}>$<input value={(row.material_detalle.costoUnitario)} type="number" step="0.01" min="0" onChange={(e)=>handleChange(e,row.id,"costoUnitario",row.material)}/></div></td>
             <td>{formatter.format((row.cantidad * row.material_detalle.costoUnitario).toFixed(2))}</td>
         </Fragment>
     )
@@ -697,8 +697,8 @@ function MaterialRow({row,onChange,deleteInsumo,duplicateInsumo}){
 
 function ManoObraRow({row,onChange,deleteInsumo,duplicateInsumo}){
     
-    const handleChange = (event, id, field) => {
-        onChange(event, id, "mano_obra", field);
+    const handleChange = (event, id, field,InsumoID) => {
+        onChange(event, id, "mano_obra", field,InsumoID);
     };
 
     return(
@@ -707,11 +707,11 @@ function ManoObraRow({row,onChange,deleteInsumo,duplicateInsumo}){
                 <button onClick={(e)=>{deleteInsumo("mano_obra",row.mano_obra)}}><i className="material-icons">delete</i></button>
                 <button onClick={(e)=>{duplicateInsumo("mano_obra",row)}}><i className="material-icons">content_copy</i></button>
             </td>
-            <td><input value={row.mano_obra_detalle.clave} onChange={(e)=>handleChange(e,row.id,"clave")}/></td>
-            <td><textarea value={row.mano_obra_detalle.descripcion} onChange={(e) => handleChange(e, row.id, "descripcion")} /></td>
-            <td ><input value={row.cantidad} type="number" min="0" onChange={(e)=>handleChange(e,row.id,"cantidad")}/></td>
-            <td ><input value={row.mano_obra_detalle.unidad} onChange={(e)=>handleChange(e,row.id,"unidad")} /></td>
-            <td ><div className="costo-wrap">$<input value={(row.mano_obra_detalle.salario)} type="number" min="0" step="0.01" onChange={(e)=>handleChange(e,row.id,"salario")} /></div></td>
+            <td><input value={row.mano_obra_detalle.clave} onChange={(e)=>handleChange(e,row.id,"clave",row.mano_obra)}/></td>
+            <td><textarea value={row.mano_obra_detalle.descripcion} onChange={(e) => handleChange(e, row.id, "descripcion",row.mano_obra)} /></td>
+            <td ><input value={row.cantidad} type="number" min="0" onChange={(e)=>handleChange(e,row.id,"cantidad",row.mano_obra)}/></td>
+            <td ><input value={row.mano_obra_detalle.unidad} onChange={(e)=>handleChange(e,row.id,"unidad",row.mano_obra)} /></td>
+            <td ><div className="costo-wrap">$<input value={(row.mano_obra_detalle.salario)} type="number" min="0" step="0.01" onChange={(e)=>handleChange(e,row.id,"salario",row.mano_obra)} /></div></td>
             <td >{formatter.format((row.cantidad * row.mano_obra_detalle.salario).toFixed(2))}</td>
         </Fragment>
     )
@@ -721,8 +721,8 @@ function ManoObraRow({row,onChange,deleteInsumo,duplicateInsumo}){
 
 function EquipoHerramientaRow({row,onChange,deleteInsumo,duplicateInsumo}){
 
-    const handleChange = (event, id, field) => {
-        onChange(event, id, "equipo_herramienta", field);
+    const handleChange = (event, id, field,InsumoID) => {
+        onChange(event, id, "equipo_herramienta", field,InsumoID);
     }
 
     return(
@@ -732,11 +732,11 @@ function EquipoHerramientaRow({row,onChange,deleteInsumo,duplicateInsumo}){
                 <button onClick={(e)=>{deleteInsumo("equipo_herramienta",row.equipo_herramienta)}}><i className="material-icons">delete</i></button>
                 <button onClick={(e)=>{duplicateInsumo("equipo_herramienta",row)}}><i className="material-icons">content_copy</i></button>
             </td>
-            <td><input value={row.equipo_herramienta_detalle.clave} onChange={(e)=>handleChange(e,row.id,"clave")}/></td>
-            <td><textarea value={row.equipo_herramienta_detalle.descripcion} onChange={(e) => handleChange(e, row.id, "descripcion")} /></td>
-            <td ><input value={row.cantidad} type="number" min="0" onChange={(e)=>handleChange(e,row.id,"cantidad")}/></td>
-            <td ><input value={row.equipo_herramienta_detalle.unidad} onChange={(e)=>handleChange(e,row.id,"unidad")}/></td>
-            <td ><div className="costo-wrap">$<input value={(row.equipo_herramienta_detalle.costoUnitario)} type="number" min="0" step="0.01" onChange={(e)=>handleChange(e,row.id,"costoUnitario")} /></div></td>
+            <td><input value={row.equipo_herramienta_detalle.clave} onChange={(e)=>handleChange(e,row.id,"clave",row.equipo_herramienta)}/></td>
+            <td><textarea value={row.equipo_herramienta_detalle.descripcion} onChange={(e) => handleChange(e, row.id, "descripcion",row.equipo_herramienta)} /></td>
+            <td ><input value={row.cantidad} type="number" min="0" onChange={(e)=>handleChange(e,row.id,"cantidad",row.equipo_herramienta)}/></td>
+            <td ><input value={row.equipo_herramienta_detalle.unidad} onChange={(e)=>handleChange(e,row.id,"unidad",row.equipo_herramienta)}/></td>
+            <td ><div className="costo-wrap">$<input value={(row.equipo_herramienta_detalle.costoUnitario)} type="number" min="0" step="0.01" onChange={(e)=>handleChange(e,row.id,"costoUnitario",row.equipo_herramienta)} /></div></td>
             <td >{formatter.format((row.cantidad * row.equipo_herramienta_detalle.costoUnitario).toFixed(2))}</td>
         </Fragment>
     )
